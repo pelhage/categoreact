@@ -11,4 +11,8 @@ Super minimalist, unopinionated, customizable plugin
 - Add css styling options
 - Simplify and decouple the onCategoryChange API
 - Add documentation 
+  - Add GIF showing use
+  - Install section
+  - API Section
+    - onCategoryChange
 
