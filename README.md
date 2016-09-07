@@ -74,7 +74,7 @@ props.onCategoryAdd(category) {
 ```
 ### props.onCategoryRemove(**category**)
 
-```
+```javascript
 /**
  * When a user removes a category, would you like to do
  * anything specific with the removed category?
