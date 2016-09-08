@@ -2,6 +2,7 @@
 
 Categoreact is a minimalist categoried input form where tags appear when user separates them by commas or tabs.
 
+![categoreact in action](https://media.giphy.com/media/VA2Nu23NyEFVe/giphy.gif)
 ## Installation
 ```
 npm install categoreact --save
