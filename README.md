@@ -1,5 +1,6 @@
 ## Categoreact
 [![npm version](https://img.shields.io/npm/v/categoreact.svg?style=flat-square)](https://www.npmjs.com/package/categoreact)
+[![Build Status](https://travis-ci.org/pelhage/categoreact.svg?branch=master)](https://travis-ci.org/pelhage/categoreact)
 
 Categoreact is a minimalist categoried input field with categoried tags that appear whenever users type commas or hit tabs. The categories are stored in an array held by a parent container component you provide, and are passed down as props to the (dumb) categoreact component for rendering and manipulation.
 
