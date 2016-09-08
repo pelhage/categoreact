@@ -6,11 +6,11 @@ export default class App extends Component {
 
   constructor(props) {
     super(props)
-    this.onCategoryChange = this.onCategoryChange.bind(this)
+    this.onCategoriesUpdate = this.onCategoriesUpdate.bind(this)
     this.state = { categories: [] }
   }
 
-  onCategoryChange(e) {
+  onCategoriesUpdate(e) {
     this.setState({ categories: e })
   }
 
@@ -20,7 +20,7 @@ export default class App extends Component {
         <p style={{fontFamily:'Helvetica', paddingLeft: '10px'}}>Categories</p>
         <CategoriedInput
           placeholder="Enter a category"
-          onCategoryChange={this.onCategoryChange}
+          onCategoriesUpdate={this.onCategoriesUpdate}
           categories={this.state.categories} />
       </div>
     )
