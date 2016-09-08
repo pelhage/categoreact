@@ -98,7 +98,7 @@ describe('<CategoriedInput />', () => {
         />)
       expect(wrapper.childAt(1).children().length).to.equal(1)
 
-      wrapper.find('.category-close').simulate('click')
+      wrapper.find('.catreact-render__tag-close').simulate('click')
       expect(categoryArr.length).to.equal(0)
 
     })
