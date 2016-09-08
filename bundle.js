@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0b4522fc2730c40b6d86"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a9f3a28c91aa0744abdc"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22032,8 +22032,8 @@
 	  }
 
 	  _createClass(App, [{
-	    key: 'onCategoryChange',
-	    value: function onCategoryChange(e) {
+	    key: 'onCategoriesUpdate',
+	    value: function onCategoriesUpdate(e) {
 	      this.setState({ categories: e });
 	    }
 	  }, {
