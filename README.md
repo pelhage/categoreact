@@ -1,6 +1,6 @@
 ## Work In Progress
 
-Categoreact is a minimalist categoried input form where tags appear when user separates them by commas or tabs.
+Categoreact is a minimalist categoried input where tags appear whenever users type commas or hit tabs. The categories are stored in an array held by a container component you provide, and are passed down as props to the (dumb) categoreact component.
 
 ![categoreact in action](https://media.giphy.com/media/VA2Nu23NyEFVe/giphy.gif) ![another example](https://media.giphy.com/media/US4VQOFyYascU/giphy.gif)
 
@@ -36,13 +36,14 @@ export default class MyContainer extends Component {
 }
 ```
 ## CSS + Styling
-For now, for the sake of time and simplicity, categoreact's styling will be modified by using class names. V2 should support css modules and inline styling, but for now, this is what we're going with!
-- .categoreact
-- .categoreact__input
-- .categoreact__rendered
-- .categoreact__rendered--inner
-- .categoreact__placeholder
-
+For now, temporarily, for the sake of time and simplicity, categoreact's styling will be modified by using external stylesheets. V2 should support css modules and inline styling, but for now, this is what we're going with!
+- `.catreact` (the main component)
+- `.catreact__input` (the input form)
+- `.catreact-render` (the rendered tags wrapper)
+- `.catreact-render__inner` (the rendered tags inner div)
+- `.catreact-render__tag` (the individual category tag)
+- `.catreact-render__tag-close` (the category tag close button)
+- `.catreact__placeholder` (the placeholder text)
 
 ## Core
 ### props.onCategoriesUpdate(**updatedCategories**)
@@ -73,27 +74,55 @@ Most use cases will be pretty straightforward. A user will add and remove the ca
 
 If, however, you would like to trigger events during the user's process of adding and removing categories, then you have that flexibility by passing respective functions as props.
 
-### props.onCategoryAdd(**category**)
+### onCategoryAdd(*category*)
 ```javascript
 /**
  * When a user adds a category, would you like to do
  * anything specific with the added category?
- *
- * if so, define that with onCategoryAdd
  */
-props.onCategoryAdd(addedCategory) {
+onCategoryAdd(addedCategory) {
   console.log(addedCategory)
 }
 ```
-### props.onCategoryRemove(**category**)
-
+### onCategoryRemove(*category*)
 ```javascript
 /**
  * When a user removes a category, would you like to do
  * anything specific with the removed category?
  */
-props.onCategoryRemove(removedCategory) {
+onCategoryRemove(removedCategory) {
   console.log(removedCategory)
+}
+```
+### Example
+```javascript
+import React, { Component } from 'react'
+import CategoriedInput from 'categoreact'
+
+export default class MyContainer extends Component {
+  constructor() {
+    super()
+    this.state = { categories: [] }
+  }
+  onCategoryChange(updatedCategories) {
+    this.setState({categories: updatedCategories})
+  }
+  onCategoryAdd(addedCategory) {
+    alert(`You added ${addedCategory}`)
+  }
+  onCategoryRemove(removedCategory) {
+    console.log(`Do something with ${removedCategory}`)
+  }
+  render() {
+    return (
+      <CategoriedInput
+        categories={this.state.categories}
+        onCategoryChange={this.onCategoryChange.bind(this)}
+        onCategoryAdd={this.onCategoryAdd.bind(this)}
+        onCategoryRemove={this.onCategoryRemove.bind(this)}
+      />
+    )
+  }
 }
 ```
 
