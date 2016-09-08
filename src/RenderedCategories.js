@@ -25,9 +25,9 @@ class RenderedCategories extends Component {
     const { categories } = this.props
 
     if (categories.length) {
-      return (<div>{this.renderCategories(categories)}</div>)
+      return (<div className="categoreact__rendered--inner">{this.renderCategories(categories)}</div>)
     } else {
-      return <span>Add categories separated by tabs or commas</span>
+      return <span className="categoreact__placeholder">Add categories separated by tabs or commas</span>
     }
   }
 }

@@ -2,7 +2,8 @@
 
 Categoreact is a minimalist categoried input form where tags appear when user separates them by commas or tabs.
 
-![categoreact in action](https://media.giphy.com/media/VA2Nu23NyEFVe/giphy.gif)
+![categoreact in action](https://media.giphy.com/media/VA2Nu23NyEFVe/giphy.gif) ![another example](https://media.giphy.com/media/US4VQOFyYascU/giphy.gif)
+
 ## Installation
 ```
 npm install categoreact --save
@@ -34,6 +35,14 @@ export default class MyContainer extends Component {
   }
 }
 ```
+## CSS + Styling
+For now, for the sake of time and simplicity, categoreact's styling will be modified by using class names. V2 should support css modules and inline styling, but for now, this is what we're going with!
+- .categoreact
+- .categoreact__input
+- .categoreact__rendered
+- .categoreact__rendered--inner
+- .categoreact__placeholder
+
 
 ## Core
 ### props.onCategoriesUpdate(**updatedCategories**)
@@ -69,9 +78,11 @@ If, however, you would like to trigger events during the user's process of addin
 /**
  * When a user adds a category, would you like to do
  * anything specific with the added category?
+ *
+ * if so, define that with onCategoryAdd
  */
-props.onCategoryAdd(category) {
-  console.log(category)
+props.onCategoryAdd(addedCategory) {
+  console.log(addedCategory)
 }
 ```
 ### props.onCategoryRemove(**category**)
@@ -82,20 +93,12 @@ props.onCategoryAdd(category) {
  * anything specific with the removed category?
  */
 props.onCategoryRemove(removedCategory) {
-  console.log(category)
+  console.log(removedCategory)
 }
 ```
 
 ## TO DO:
 
-- Add tests
 - Add css styling options
 - Simplify and decouple the onCategoryChange API
-- Add documentation
-  - Add GIF showing use
-  - Install section
-  - API Section
-    - onCategoryChange
-  - Developers section
 - Add linting to project
-- Ensure props arent being manipulated directly

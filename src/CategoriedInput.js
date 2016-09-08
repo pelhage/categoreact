@@ -44,20 +44,21 @@ class CategoriedInput extends Component {
     const categories = this.props.categories.slice()
 
     categories.splice(categories.indexOf(category), 1)
-    this.setState({ categories })
     this.props.onCategoryChange(categories)
   }
 
   render() {
     const { categories } = this.props
     return (
-      <div>
+      <div className="categoreact">
         <Input
+          className="categoreact__input"
           onKeyDown={this.addToCategories}
           placeholder={this.props.placeholder}
           onChange={this.handleCategories}
           value={this.state.currentCategory} />
         <RenderedCategories
+          className="categoreact__rendered"
           categories={categories}
           handleClick={this.removeFromCategories} />
       </div>
