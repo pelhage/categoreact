@@ -1,13 +1,13 @@
 var path = require('path');
 var webpack = require('webpack')
-var APP_DIR = path.resolve(__dirname, 'examples');
+var APP_DIR = path.resolve(__dirname, 'demo/src');
 var SRC_DIR = path.resolve(__dirname, 'src');
 var BUILD_DIR = path.resolve(__dirname, 'demo');
 
 
 module.exports = {
   entry: {
-    app: ['./examples/index.js'],
+    app: ['./demo/src/index.js'],
   },
   output: {
     path: BUILD_DIR,
