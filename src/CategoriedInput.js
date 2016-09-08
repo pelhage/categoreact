@@ -36,7 +36,7 @@ class CategoriedInput extends Component {
         if (onCategoryAdd) {
           onCategoryAdd(enteredCategory)
         }
-        this.props.onCategoryChange(allCategories)
+        this.props.onCategoriesUpdate(allCategories)
       }
     }
   }
@@ -48,14 +48,14 @@ class CategoriedInput extends Component {
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
     const allCategories = this.props.categories.slice()
-    const { onCategoryChange, onCategoryRemove } = this.props
+    const { onCategoriesUpdate, onCategoryRemove } = this.props
 
     allCategories.splice(allCategories.indexOf(category), 1)
 
     if (onCategoryRemove) {
       onCategoryRemove(category)
     }
-    this.props.onCategoryChange(allCategories)
+    this.props.onCategoriesUpdate(allCategories)
   }
 
   render() {
@@ -78,7 +78,7 @@ class CategoriedInput extends Component {
 }
 
 CategoriedInput.propTypes = {
-  onCategoryChange: PropTypes.func.isRequired,
+  onCategoriesUpdate: PropTypes.func.isRequired,
   onCategoryAdd: PropTypes.func,
   onCategoryRemove: PropTypes.func,
   categories: PropTypes.array.isRequired,

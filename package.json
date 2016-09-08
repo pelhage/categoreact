@@ -4,11 +4,10 @@
   "description": "Minimalist categoried input react component where tags appear when user separates them by commas or tabs",
   "main": "dist/categoreact.js",
   "scripts": {
+    "start": "node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --content-base build/",
     "dist": "cross-env NODE_ENV=production webpack -p --progress",
-    "post": "npm run dist",
     "test": "mocha --compilers js:babel-register",
-    "dev-test": "mocha -w --compilers js:babel-register",
-    "webpack-dev": "node_modules/.bin/webpack-dev-server --config webpack.config.dev.js --content-base build/"
+    "dev-test": "mocha -w --compilers js:babel-register"
   },
   "keywords": [
     "React",

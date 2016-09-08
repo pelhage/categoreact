@@ -22,11 +22,9 @@ export default class MyContainer extends Component {
     this.state = { categories: [] }
     this.onCategoryChange = this.onCategoryChange.bind(this)
   }
-
   onCategoryChange(updatedCategories) {
     this.setState({categories: updatedCategories})
   }
-
   render() {
     return (
       <CategoriedInput
@@ -48,11 +46,11 @@ For now, temporarily, for the sake of time and simplicity, categoreact's styling
 - `.catreact__placeholder` (the placeholder text)
 
 ## Core
-### props.onCategoriesUpdate(**updatedCategories**)
+### onCategoriesUpdate(*updatedCategories*)
 
-This is a required, and only required function for `Categoreact` that you need to pass in as props. It is called any time the list of categories, `allCategories`, is updated by the user. `onCategoriesUpdate` takes one parameter, `updatedCategories`, (the updated list of categories as a result of the user's action).
+This is a required, and only required function for `Categoreact` that you need to pass in as props. It is called any time the list of categories, `categories`, is updated by the user. `onCategoriesUpdate` takes one parameter, `updatedCategories`, (the updated list of categories as a result of the user's action).
 
-Since `Categoreact` was designed to be a dumb/stateless component that only receive props, `onCategoriesUpdate` should be in categoreact's parent container and should be updating the `allCategories` array that gets passed in as props to categoreact.
+Since `Categoreact` was designed to be a dumb/stateless component that only receive props, `onCategoriesUpdate` should be in categoreact's parent container and should be updating the `categories` array that gets passed in as props to categoreact.
 
 This gives you the flexibility of managing the state of the input's categories list however you choose, whether it be in the components state directly, or whether it is dispatched with Redux/Flux.
 
@@ -65,7 +63,7 @@ This gives you the flexibility of managing the state of the input's categories l
  * these changes. This will trigger a re-render of the
  * category tags
  */
-props.onCategoriesUpdate(updatedCategories) {
+onCategoriesUpdate(updatedCategories) {
   console.log(updatedCategories)
 }
 ```
@@ -130,6 +128,6 @@ export default class MyContainer extends Component {
 
 ## TO DO:
 
-- Add css styling options
-- Simplify and decouple the onCategoryChange API
+- Decide on and add css styling options
 - Add linting to project
+- Fix inconsistencies in documentation
