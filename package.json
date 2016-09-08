@@ -1,6 +1,6 @@
 {
   "name": "categoreact",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Minimalist categoried input react component where tags appear when user separates them by commas or tabs",
   "main": "./lib",
   "scripts": {
