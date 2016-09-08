@@ -25,12 +25,18 @@ class CategoriedInput extends Component {
     if (commaOrTabPress) {
       e.preventDefault()
       if (enteredCategory.length) {
-        let categories = this.props.categories.slice()
-        if (categories.indexOf(enteredCategory) === -1) {
-          categories.push(enteredCategory)
+        let allCategories = this.props.categories.slice()
+        let { onCategoryAdd } = this.props
+
+        if (allCategories.indexOf(enteredCategory) === -1) {
+          allCategories.push(enteredCategory)
         }
-        this.setState({ currentCategory: '', categories })
-        this.props.onCategoryChange(categories)
+
+        this.setState({ currentCategory: '', allCategories })
+        if (onCategoryAdd) {
+          onCategoryAdd(enteredCategory)
+        }
+        this.props.onCategoryChange(allCategories)
       }
     }
   }
@@ -41,10 +47,15 @@ class CategoriedInput extends Component {
   // Remove the category from component state, and call
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
-    const categories = this.props.categories.slice()
+    const allCategories = this.props.categories.slice()
+    const { onCategoryChange, onCategoryRemove } = this.props
 
-    categories.splice(categories.indexOf(category), 1)
-    this.props.onCategoryChange(categories)
+    allCategories.splice(allCategories.indexOf(category), 1)
+
+    if (onCategoryRemove) {
+      onCategoryRemove(category)
+    }
+    this.props.onCategoryChange(allCategories)
   }
 
   render() {
@@ -60,7 +71,7 @@ class CategoriedInput extends Component {
         <RenderedCategories
           className="catreact-render"
           categories={categories}
-          handleClick={this.removeFromCategories} />
+          handleRemove={this.removeFromCategories} />
       </div>
     )
   }

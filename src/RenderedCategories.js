@@ -7,7 +7,7 @@ class RenderedCategories extends Component {
   }
 
   renderCategories() {
-    const { handleClick } = this.props
+    const { handleRemove } = this.props
 
     return this.props.categories.map((category, index) => {
       return (
@@ -15,7 +15,7 @@ class RenderedCategories extends Component {
           <span
             className="catreact-render__tag-close"
             data-category={category}
-            onClick={handleClick}>x</span>
+            onClick={handleRemove}>x</span>
         </span>
       )
     })
@@ -34,7 +34,7 @@ class RenderedCategories extends Component {
 
 RenderedCategories.propTypes = {
   categories: PropTypes.array,
-  handleClick: PropTypes.func.isRequired
+  handleRemove: PropTypes.func.isRequired
 }
 
 export default RenderedCategories;
