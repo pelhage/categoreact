@@ -1,6 +1,6 @@
 {
   "name": "categoreact",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A categoried input React component",
   "main": "index.js",
   "scripts": {
