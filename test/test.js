@@ -43,7 +43,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={e => { categoryArr = e }}
+          onCategoriesUpdate={e => { categoryArr = e }}
           onCategoryAdd={e => { addedValue = e }}
         />)
 
@@ -63,7 +63,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={(e) => { categoryArr = e }}
+          onCategoriesUpdate={(e) => { categoryArr = e }}
         />)
       expect(categoryArr.length).to.equal(2)
       let input = wrapper.find('input').get(0)
@@ -80,7 +80,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={(e) => { categoryArr = e }}
+          onCategoriesUpdate={(e) => { categoryArr = e }}
         />)
 
       let input = wrapper.find('input').get(0)
@@ -98,7 +98,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={(e) => { categoryArr = e }}
+          onCategoriesUpdate={(e) => { categoryArr = e }}
         />)
       let input = wrapper.find('input').get(0)
       wrapper.find('input').simulate('change', {target: {value: 'FooBar'}});
@@ -119,7 +119,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={(e) => { categoryArr = e }}
+          onCategoriesUpdate={(e) => { categoryArr = e }}
         />)
       expect(wrapper.childAt(1).children().length).to.equal(2)
       wrapper.find('.catreact-render__tag-close').first().simulate('click')
@@ -135,7 +135,7 @@ describe('<CategoriedInput />', () => {
       let wrapper = mount(
         <CategoriedInput
           categories={categoryArr}
-          onCategoryChange={e => { categoryArr = e }}
+          onCategoriesUpdate={e => { categoryArr = e }}
           onCategoryRemove={e => { removedValue = e }}
         />)
 
