@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import CategoriedInput from '../src/CategoriedInput'
+import CategoriedInput from '../../src/CategoriedInput'
 // import './App.css'
 
 export default class App extends Component {
