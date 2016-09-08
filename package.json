@@ -1,8 +1,8 @@
 {
   "name": "categoreact",
-  "version": "1.0.7",
-  "description": "A categoried input React component",
-  "main": "index.js",
+  "version": "1.0.12",
+  "description": "Minimalist categoried input react component where tags appear when user separates them by commas or tabs",
+  "main": "dist/categoreact.js",
   "scripts": {
     "dist": "cross-env NODE_ENV=production webpack -p --progress",
     "post": "npm run dist",
@@ -19,6 +19,11 @@
   ],
   "author": "Patrick El-Hage",
   "license": "ISC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pelhage/categoreact.git"
+  },
   "devDependencies": {
     "autoprefixer": "6.3.7",
     "babel-cli": "^6.14.0",
@@ -63,5 +68,8 @@
         "*.js"
       ]
     }
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/pelhage/categoreact/issues"
+  },
 }

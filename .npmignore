@@ -6,3 +6,4 @@ test
 webpack.config.dev.js
 webpack.config.js
 .gitignore
+.travis.yml
