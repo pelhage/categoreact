@@ -10,10 +10,11 @@ npm install categoreact --save
 ## Example
 ```javascript
 import React, { Component } from 'react'
-import Categoreact from 'categoreact'
+import CategoriedInput from 'categoreact'
 
 export default class MyContainer extends Component {
   constructor() {
+    super()
     this.state = { categories: [] }
     this.onCategoryChange = this.onCategoryChange.bind(this)
   }
@@ -24,8 +25,8 @@ export default class MyContainer extends Component {
 
   render() {
     return (
-      <Categoreact
-        allCategories={this.state.categories}
+      <CategoriedInput
+        categories={this.state.categories}
         onCategoryChange={this.onCategoryChange}
       />
     )

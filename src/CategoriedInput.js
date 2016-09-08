@@ -18,16 +18,16 @@ class CategoriedInput extends Component {
   // Push a category to the component's state when user hits
   // comma or tab
   addToCategories(e) {
-    const commaOrTabPress = (e.which === 9 || e.which === 9) ||
-        (e.keyCode === 188 || e.keyCode === 188)
-    const inputValue = e.target.value.trim()
+    const commaOrTabPress = (e.which === 9 || e.which === 188) ||
+        (e.keyCode === 9 || e.keyCode === 188)
+    const enteredCategory = e.target.value.trim()
 
     if (commaOrTabPress) {
       e.preventDefault()
-      if (inputValue.length) {
+      if (enteredCategory.length) {
         let categories = this.props.categories.slice()
-        if (categories.indexOf(inputValue) === -1) {
-          categories.push(inputValue)
+        if (categories.indexOf(enteredCategory) === -1) {
+          categories.push(enteredCategory)
         }
         this.setState({ currentCategory: '', categories })
         this.props.onCategoryChange(categories)
@@ -41,7 +41,7 @@ class CategoriedInput extends Component {
   // Remove the category from component state, and call
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
-    const categories = this.state.categories.slice()
+    const categories = this.props.categories.slice()
 
     categories.splice(categories.indexOf(category), 1)
     this.setState({ categories })

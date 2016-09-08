@@ -6,7 +6,7 @@
   "scripts": {
     "dist": "cross-env NODE_ENV=production webpack -p --progress",
     "post": "npm run dist",
-    "test": "mocha --compilers js:babel-register",
+    "test": "mocha -w --compilers js:babel-register",
     "webpack-dev": "node_modules/.bin/webpack-dev-server --content-base build/"
   },
   "keywords": [
