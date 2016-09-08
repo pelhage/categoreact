@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack')
 var APP_DIR = path.resolve(__dirname, 'examples');
 var SRC_DIR = path.resolve(__dirname, 'src');
-var BUILD_DIR = path.resolve(__dirname, 'build');
+var BUILD_DIR = path.resolve(__dirname, 'demo');
 
 
 module.exports = {
@@ -11,7 +11,7 @@ module.exports = {
   },
   output: {
     path: BUILD_DIR,
-    publicPath: "/assets/",
+    publicPath: "/",
     filename: "bundle.js"
   },
   plugins: [
