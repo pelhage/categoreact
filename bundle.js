@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "475a0e3fc636991ef8d5"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0b4522fc2730c40b6d86"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22026,7 +22026,7 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    _this.onCategoryChange = _this.onCategoryChange.bind(_this);
+	    _this.onCategoriesUpdate = _this.onCategoriesUpdate.bind(_this);
 	    _this.state = { categories: [] };
 	    return _this;
 	  }
@@ -22049,7 +22049,7 @@
 	        ),
 	        _react2.default.createElement(_CategoriedInput2.default, {
 	          placeholder: 'Enter a category',
-	          onCategoryChange: this.onCategoryChange,
+	          onCategoriesUpdate: this.onCategoriesUpdate,
 	          categories: this.state.categories })
 	      );
 	    }
