@@ -1,7 +1,5 @@
 demo
-examples
 test
-.babelrc
 .gitignore
 .travis.yml
 webpack.config.dev.js
