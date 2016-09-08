@@ -11,9 +11,9 @@ class RenderedCategories extends Component {
 
     return this.props.categories.map((category, index) => {
       return (
-        <span className="category-tag" key={index}>{category}
+        <span className="catreact-render__tag" key={index}>{category}
           <span
-            className="category-close"
+            className="catreact-render__tag-close"
             data-category={category}
             onClick={handleClick}>x</span>
         </span>
@@ -25,9 +25,9 @@ class RenderedCategories extends Component {
     const { categories } = this.props
 
     if (categories.length) {
-      return (<div className="categoreact__rendered--inner">{this.renderCategories(categories)}</div>)
+      return (<div className="catreact-render__inner">{this.renderCategories(categories)}</div>)
     } else {
-      return <span className="categoreact__placeholder">Add categories separated by tabs or commas</span>
+      return <span className="catreact__placeholder">Add categories separated by tabs or commas</span>
     }
   }
 }

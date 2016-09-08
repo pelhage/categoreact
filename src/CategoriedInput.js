@@ -50,15 +50,15 @@ class CategoriedInput extends Component {
   render() {
     const { categories } = this.props
     return (
-      <div className="categoreact">
+      <div className="catreact">
         <Input
-          className="categoreact__input"
+          className="catreact__input"
           onKeyDown={this.addToCategories}
           placeholder={this.props.placeholder}
           onChange={this.handleCategories}
           value={this.state.currentCategory} />
         <RenderedCategories
-          className="categoreact__rendered"
+          className="catreact-render"
           categories={categories}
           handleClick={this.removeFromCategories} />
       </div>
@@ -68,6 +68,8 @@ class CategoriedInput extends Component {
 
 CategoriedInput.propTypes = {
   onCategoryChange: PropTypes.func.isRequired,
+  onCategoryAdd: PropTypes.func,
+  onCategoryRemove: PropTypes.func,
   categories: PropTypes.array.isRequired,
   placeholder: PropTypes.string
 }

@@ -6,7 +6,7 @@ class Input extends Component {
   }
 
   render() {
-    return <input className="form__input" {...this.props}/>
+    return <input className="catreact__input" {...this.props}/>
   }
 }
 
