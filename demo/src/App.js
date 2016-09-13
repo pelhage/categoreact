@@ -11,6 +11,7 @@ export default class App extends Component {
   }
 
   onCategoriesUpdate(e) {
+    // console.log('Setting categories to: ', e);
     this.setState({ categories: e })
   }
 

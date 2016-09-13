@@ -36,27 +36,23 @@ describe('<CategoriedInput />', () => {
   });
 
   describe('Adding categories', () => {
-    it('should have a functioning onCategoryAdd handler', () => {
-      let categoryArr = ['Foo', 'Bar', 'Baz']
-      let addedValue = ''
-
-      let wrapper = mount(
-        <CategoriedInput
-          categories={categoryArr}
-          onCategoriesUpdate={e => { categoryArr = e }}
-          onCategoryAdd={e => { addedValue = e }}
-        />)
-
-      expect(wrapper.childAt(1).children().length).to.equal(3)
-      let input = wrapper.find('input').get(0)
-      wrapper.find('input').simulate('change', {target: {value: 'FooBar'}});
-      wrapper.find('input').simulate("keyDown", {
-        keyCode: 9,
-        which: 9
-      });
-      // expect(wrapper.childAt(1).children().length).to.equal(4)
-      expect(addedValue).to.equal('FooBar')
-    })
+    // it('should have a functioning onCategoryAdd handler', () => {
+    //   let categoryArr = ['Foo', 'Bar', 'Baz']
+    //   let addedValue = ''
+    //
+    //   let wrapper = mount(
+    //     <CategoriedInput
+    //       categories={categoryArr}
+    //       onCategoriesUpdate={e => { categoryArr = e }}
+    //       onCategoryAdd={e => { addedValue = e }}
+    //     />)
+    //
+    //   expect(wrapper.childAt(1).children().length).to.equal(3)
+    //   let input = wrapper.find('input').get(0)
+    //   wrapper.find('input').simulate('change', {target: {value: 'FooBar,'}});
+    //   // expect(wrapper.childAt(1).children().length).to.equal(4)
+    //   expect(addedValue).to.equal('FooBar')
+    // })
 
     it('should not add empty categories', () => {
       let categoryArr = ['Foo', 'Bar']
@@ -67,11 +63,7 @@ describe('<CategoriedInput />', () => {
         />)
       expect(categoryArr.length).to.equal(2)
       let input = wrapper.find('input').get(0)
-      wrapper.find('input').simulate('change', {target: {value: '    '}});
-      wrapper.find('input').simulate("keyDown", {
-        keyCode: 9,
-        which: 9
-      });
+      wrapper.find('input').simulate('change', {target: {value: '    ,'}});
       expect(categoryArr.length).to.equal(2)
     })
 
@@ -84,16 +76,24 @@ describe('<CategoriedInput />', () => {
         />)
 
       let input = wrapper.find('input').get(0)
-      wrapper.find('input').simulate('change', {target: {value: 'FooBar'}});
+      wrapper.find('input').simulate('change', {
+        target: {
+          value: 'Baz'
+        }
+      });
       wrapper.find('input').simulate("keyDown", {
+        which: 9,
         keyCode: 9,
-        which: 9
+        target: { selectionStart: 3 }
       });
       // It has cleared
+      //
+      console.log('val', input.value);
+      console.log(categoryArr);
       expect(input.value).to.equal('')
     })
 
-    it('should add categories with commas', () => {
+    it('should clear input upon comma', () => {
       let categoryArr = ['Foo', 'Bar']
       let wrapper = mount(
         <CategoriedInput
@@ -102,14 +102,12 @@ describe('<CategoriedInput />', () => {
         />)
       let input = wrapper.find('input').get(0)
       wrapper.find('input').simulate('change', {target: {value: 'FooBar'}});
-      wrapper.find('input').simulate("keyDown", {
-        keyCode: 188,
-        which: 188
-      });
+      expect(input.value).to.equal('FooBar')
+      wrapper.find('input').simulate("change", {target: {value: 'foo,'}});
+
       // It has cleared
       expect(input.value).to.equal('')
     })
-
   })
 
   describe('Removing categories', () => {
@@ -142,6 +140,21 @@ describe('<CategoriedInput />', () => {
       expect(wrapper.childAt(1).children().length).to.equal(1)
       wrapper.find('.catreact-render__tag-close').simulate('click')
       expect(removedValue).to.equal('Foo')
+    })
+
+  })
+
+  describe('Component methods', () =>{
+
+    it('should parse categories', () => {
+      let categoriesString = ' hello, world , my name, is patrick, '
+      let allCategories = ['my name', 'world']
+      let component = shallow(<CategoriedInput
+        categories={[]}
+        onCategoriesUpdate={(e) => { categoryArr = e }}
+      />)
+      let answer = component.instance().parseCategories(categoriesString, allCategories)
+      expect(answer).to.eql(['hello', 'is patrick'])
     })
 
   })

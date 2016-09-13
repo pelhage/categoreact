@@ -10,40 +10,60 @@ class CategoriedInput extends Component {
     this.addToCategories = this.addToCategories.bind(this)
     this.handleCategories = this.handleCategories.bind(this)
     this.removeFromCategories = this.removeFromCategories.bind(this)
+    this.parseCategories = this.parseCategories.bind(this)
+    this.convertToTags = this.convertToTags.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ categories: nextProps.categories })
   }
+
+  parseCategories(categoriesString, allCategories) {
+    return categoriesString.trim().split(",").map((category) => {
+      category = category.trim()
+      return category.trim()
+    })
+    .filter((category) => {
+      return category !== '' && category !== undefined && allCategories.indexOf(category) === -1
+    })
+  }
+
   // Push a category to the component's state when user hits
   // comma or tab
   addToCategories(e) {
-    const commaOrTabPress = (e.which === 9 || e.which === 188) ||
-        (e.keyCode === 9 || e.keyCode === 188)
-    const enteredCategory = e.target.value.trim()
-
-    if (commaOrTabPress) {
+    const tabPress = (e.which === 9 || e.keyCode === 9)
+    const enteredCategory = this.state.currentCategory
+    const cursorIndex = e.target.selectionStart
+    if (tabPress && cursorIndex > 0) {
       e.preventDefault()
-      if (enteredCategory.length) {
-        let allCategories = this.props.categories.slice()
-        let { onCategoryAdd } = this.props
-
-        if (allCategories.indexOf(enteredCategory) === -1) {
-          allCategories.push(enteredCategory)
-        }
-
-        this.setState({ currentCategory: '', allCategories })
-        if (onCategoryAdd) {
-          onCategoryAdd(enteredCategory)
-        }
-        this.props.onCategoriesUpdate(allCategories)
-      }
+      var tabbedText = [enteredCategory.slice(0, cursorIndex), ',', enteredCategory.slice(cursorIndex)].join('');
+      this.convertToTags(tabbedText)
     }
   }
+
+  convertToTags(input) {
+    let allCategories = this.props.categories.slice() || []
+    // Set up and parse Input
+    let parsedCategories = this.parseCategories(input, allCategories)
+    // If there is no comma at the end of the input, all input will be tagged
+    let isComplete = input.trim().slice(-1) === ','
+    // If the input is not complete, make sure to hold onto whats left
+    let lastCategory = (isComplete) ? '' : parsedCategories.pop() || parsedCategories[0]
+    if (!isComplete && !parsedCategories.length) {
+      lastCategory = input
+    }
+    // Update everything
+    let updatedCategories = allCategories.concat(parsedCategories)
+    this.setState({ currentCategory: lastCategory })
+    this.props.onCategoriesUpdate(updatedCategories)
+  }
+
   // Update the current category being worked on
   handleCategories(e) {
-    this.setState({ currentCategory: e.target.value })
+    const allInput = e.target.value
+    this.convertToTags(allInput)
   }
+
   // Remove the category from component state, and call
   removeFromCategories(e) {
     const category = e.target.getAttribute('data-category')
@@ -52,7 +72,7 @@ class CategoriedInput extends Component {
 
     allCategories.splice(allCategories.indexOf(category), 1)
 
-    if (onCategoryRemove) {
+    if (typeof onCategoryRemove === 'function') {
       onCategoryRemove(category)
     }
     this.props.onCategoriesUpdate(allCategories)
