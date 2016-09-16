@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ec40ba311bd92c3c3e2e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2c10754d3169d0221175"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22027,6 +22027,8 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
 	    _this.onCategoriesUpdate = _this.onCategoriesUpdate.bind(_this);
+	    _this.onCategoryAdd = _this.onCategoryAdd.bind(_this);
+	    _this.onCategoryRemove = _this.onCategoryRemove.bind(_this);
 	    _this.state = { categories: [] };
 	    return _this;
 	  }
@@ -22036,6 +22038,16 @@
 	    value: function onCategoriesUpdate(e) {
 	      // console.log('Setting categories to: ', e);
 	      this.setState({ categories: e });
+	    }
+	  }, {
+	    key: 'onCategoryAdd',
+	    value: function onCategoryAdd(e) {
+	      console.log('onCategoryAdd', e);
+	    }
+	  }, {
+	    key: 'onCategoryRemove',
+	    value: function onCategoryRemove(e) {
+	      console.log('onCategoryRemove', e);
 	    }
 	  }, {
 	    key: 'render',
@@ -22051,6 +22063,8 @@
 	        _react2.default.createElement(_CategoriedInput2.default, {
 	          placeholder: 'Enter a category',
 	          onCategoriesUpdate: this.onCategoriesUpdate,
+	          onCategoryAdd: this.onCategoryAdd,
+	          onCategoryRemove: this.onCategoryRemove,
 	          categories: this.state.categories })
 	      );
 	    }
@@ -22159,7 +22173,13 @@
 	  }, {
 	    key: 'convertToTags',
 	    value: function convertToTags(input) {
-	      var allCategories = this.props.categories.slice() || [];
+	      var _props = this.props;
+	      var categories = _props.categories;
+	      var onCategoriesUpdate = _props.onCategoriesUpdate;
+	      var onCategoryAdd = _props.onCategoryAdd;
+
+
+	      var allCategories = categories.slice() || [];
 	      // Set up and parse Input
 	      var parsedCategories = this.parseCategories(input, allCategories);
 	      // If there is no comma at the end of the input, all input will be tagged
@@ -22172,7 +22192,15 @@
 	      // Update everything
 	      var updatedCategories = allCategories.concat(parsedCategories);
 	      this.setState({ currentCategory: lastCategory });
-	      this.props.onCategoriesUpdate(updatedCategories);
+
+	      if (typeof onCategoryAdd === 'function') {
+	        if (parsedCategories.length > 1) {
+	          onCategoryAdd(parsedCategories);
+	        } else {
+	          onCategoryAdd(parsedCategories[0]);
+	        }
+	      }
+	      onCategoriesUpdate(updatedCategories);
 	    }
 
 	    // Update the current category being worked on
@@ -22181,7 +22209,11 @@
 	    key: 'handleCategories',
 	    value: function handleCategories(e) {
 	      var allInput = e.target.value;
-	      this.convertToTags(allInput);
+	      if (allInput.indexOf(',') > -1) {
+	        this.convertToTags(allInput);
+	      } else {
+	        this.setState({ currentCategory: allInput });
+	      }
 	    }
 
 	    // Remove the category from component state, and call
@@ -22191,9 +22223,9 @@
 	    value: function removeFromCategories(e) {
 	      var category = e.target.getAttribute('data-category');
 	      var allCategories = this.props.categories.slice();
-	      var _props = this.props;
-	      var onCategoriesUpdate = _props.onCategoriesUpdate;
-	      var onCategoryRemove = _props.onCategoryRemove;
+	      var _props2 = this.props;
+	      var onCategoriesUpdate = _props2.onCategoriesUpdate;
+	      var onCategoryRemove = _props2.onCategoryRemove;
 
 
 	      allCategories.splice(allCategories.indexOf(category), 1);
@@ -22201,7 +22233,7 @@
 	      if (typeof onCategoryRemove === 'function') {
 	        onCategoryRemove(category);
 	      }
-	      this.props.onCategoriesUpdate(allCategories);
+	      onCategoriesUpdate(allCategories);
 	    }
 	  }, {
 	    key: 'render',
