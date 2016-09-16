@@ -42,7 +42,9 @@ class CategoriedInput extends Component {
   }
 
   convertToTags(input) {
-    let allCategories = this.props.categories.slice() || []
+    let { categories, onCategoriesUpdate, onCategoryAdd } = this.props
+
+    let allCategories = categories.slice() || []
     // Set up and parse Input
     let parsedCategories = this.parseCategories(input, allCategories)
     // If there is no comma at the end of the input, all input will be tagged
@@ -55,13 +57,25 @@ class CategoriedInput extends Component {
     // Update everything
     let updatedCategories = allCategories.concat(parsedCategories)
     this.setState({ currentCategory: lastCategory })
-    this.props.onCategoriesUpdate(updatedCategories)
+
+    if (typeof onCategoryAdd === 'function') {
+      if (parsedCategories.length > 1) {
+        onCategoryAdd(parsedCategories)
+      } else {
+        onCategoryAdd(parsedCategories[0])
+      }
+    }
+    onCategoriesUpdate(updatedCategories)
   }
 
   // Update the current category being worked on
   handleCategories(e) {
     const allInput = e.target.value
-    this.convertToTags(allInput)
+    if (allInput.indexOf(',') > -1) {
+      this.convertToTags(allInput)
+    } else {
+      this.setState({ currentCategory: allInput })
+    }
   }
 
   // Remove the category from component state, and call
@@ -75,7 +89,7 @@ class CategoriedInput extends Component {
     if (typeof onCategoryRemove === 'function') {
       onCategoryRemove(category)
     }
-    this.props.onCategoriesUpdate(allCategories)
+    onCategoriesUpdate(allCategories)
   }
 
   render() {

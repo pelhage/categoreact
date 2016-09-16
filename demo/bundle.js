@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ced8c2d3424451bb5670"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ec40ba311bd92c3c3e2e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -22034,6 +22034,7 @@
 	  _createClass(App, [{
 	    key: 'onCategoriesUpdate',
 	    value: function onCategoriesUpdate(e) {
+	      // console.log('Setting categories to: ', e);
 	      this.setState({ categories: e });
 	    }
 	  }, {
@@ -22119,6 +22120,8 @@
 	    _this.addToCategories = _this.addToCategories.bind(_this);
 	    _this.handleCategories = _this.handleCategories.bind(_this);
 	    _this.removeFromCategories = _this.removeFromCategories.bind(_this);
+	    _this.parseCategories = _this.parseCategories.bind(_this);
+	    _this.convertToTags = _this.convertToTags.bind(_this);
 	    return _this;
 	  }
 
@@ -22127,41 +22130,60 @@
 	    value: function componentWillReceiveProps(nextProps) {
 	      this.setState({ categories: nextProps.categories });
 	    }
+	  }, {
+	    key: 'parseCategories',
+	    value: function parseCategories(categoriesString, allCategories) {
+	      return categoriesString.trim().split(",").map(function (category) {
+	        category = category.trim();
+	        return category.trim();
+	      }).filter(function (category) {
+	        return category !== '' && category !== undefined && allCategories.indexOf(category) === -1;
+	      });
+	    }
+
 	    // Push a category to the component's state when user hits
 	    // comma or tab
 
 	  }, {
 	    key: 'addToCategories',
 	    value: function addToCategories(e) {
-	      var commaOrTabPress = e.which === 9 || e.which === 188 || e.keyCode === 9 || e.keyCode === 188;
-	      var enteredCategory = e.target.value.trim();
-
-	      if (commaOrTabPress) {
+	      var tabPress = e.which === 9 || e.keyCode === 9;
+	      var enteredCategory = this.state.currentCategory;
+	      var cursorIndex = e.target.selectionStart;
+	      if (tabPress && cursorIndex > 0) {
 	        e.preventDefault();
-	        if (enteredCategory.length) {
-	          var allCategories = this.props.categories.slice();
-	          var onCategoryAdd = this.props.onCategoryAdd;
-
-
-	          if (allCategories.indexOf(enteredCategory) === -1) {
-	            allCategories.push(enteredCategory);
-	          }
-
-	          this.setState({ currentCategory: '', allCategories: allCategories });
-	          if (onCategoryAdd) {
-	            onCategoryAdd(enteredCategory);
-	          }
-	          this.props.onCategoriesUpdate(allCategories);
-	        }
+	        var tabbedText = [enteredCategory.slice(0, cursorIndex), ',', enteredCategory.slice(cursorIndex)].join('');
+	        this.convertToTags(tabbedText);
 	      }
 	    }
+	  }, {
+	    key: 'convertToTags',
+	    value: function convertToTags(input) {
+	      var allCategories = this.props.categories.slice() || [];
+	      // Set up and parse Input
+	      var parsedCategories = this.parseCategories(input, allCategories);
+	      // If there is no comma at the end of the input, all input will be tagged
+	      var isComplete = input.trim().slice(-1) === ',';
+	      // If the input is not complete, make sure to hold onto whats left
+	      var lastCategory = isComplete ? '' : parsedCategories.pop() || parsedCategories[0];
+	      if (!isComplete && !parsedCategories.length) {
+	        lastCategory = input;
+	      }
+	      // Update everything
+	      var updatedCategories = allCategories.concat(parsedCategories);
+	      this.setState({ currentCategory: lastCategory });
+	      this.props.onCategoriesUpdate(updatedCategories);
+	    }
+
 	    // Update the current category being worked on
 
 	  }, {
 	    key: 'handleCategories',
 	    value: function handleCategories(e) {
-	      this.setState({ currentCategory: e.target.value });
+	      var allInput = e.target.value;
+	      this.convertToTags(allInput);
 	    }
+
 	    // Remove the category from component state, and call
 
 	  }, {
@@ -22176,7 +22198,7 @@
 
 	      allCategories.splice(allCategories.indexOf(category), 1);
 
-	      if (onCategoryRemove) {
+	      if (typeof onCategoryRemove === 'function') {
 	        onCategoryRemove(category);
 	      }
 	      this.props.onCategoriesUpdate(allCategories);
